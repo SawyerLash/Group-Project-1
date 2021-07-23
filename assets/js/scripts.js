@@ -1,7 +1,7 @@
 
 
 // test api for ballDontlie
-var name = "Chris Paul";
+var name = "Patrick Ewing";
 var splitname = name.split(" ");
 var firstname = splitname[0];
 var lastname = splitname[1];
