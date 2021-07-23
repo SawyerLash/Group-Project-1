@@ -1,31 +1,54 @@
 
 
-// test api for ballDontlie
-var name = "Patrick Ewing";
-var splitname = name.split(" ");
-var firstname = splitname[0];
-var lastname = splitname[1];
 
 
+// Declare the DOM elements
+var playerNameInputEl = document.querySelector('#playername');
+var playerFormEl = document.querySelector('#player-form');
 
-var getPlayerID = function() {
+
+// on button click with valid NBA player run PlayerID and Giphy functions
+var formSubmitHandler = function(event) {
+    event.preventDefault();
+
+    var playername = playerNameInputEl.value.trim();
+
+    if (playername) {
+        getPlayerID(playername);
+        giphyApi(playername);
+    } else {
+        console.log("DON'T USE THIS ALERT BUT formSubmitHandler is broken");
+        // fix this alert
+    }
+}
+
+var getPlayerID = function(name) {
      
     var apiUrl ="https://www.balldontlie.io/api/v1/players?search="+name
-    // "https://www.balldontlie.io/api/v1/players?search=Chris Paul"
+    
     fetch(apiUrl)
       .then(function(response) {
           if(response.ok) {
               
               response.json().then(function(data) {
-                  console.log(data);
+                  //console.log(data);
+                  if(data.data[0]===undefined){
+                      console.log("basketball player not found");
+                  }else {
                   console.log(data.data[0].id);
                   playerID=data.data[0].id;
                   averageStats(playerID)
+                  playerBio(data);
+                  }
             
                   
               })
           }
       })
+}
+
+var playerBio = function(playerName) {
+    console.log(playerName);
 }
 
 var averageStats = function(playerID) {
@@ -37,31 +60,37 @@ var averageStats = function(playerID) {
           if(response.ok) {
               
               response.json().then(function(data) {
-                  console.log(data);
+                  //console.log(data);
+                   getStats(data);
                   
               })
           }
       })
 }
 
-var giphyApi = function() {
+var getStats = function(playerInfo) {
+    console.log(playerInfo);
+}
+var giphyApi = function(name) {
      
     var apiUrl ='https://api.giphy.com/v1/gifs/search?q=' +name +'&api_key=HvaacROi9w5oQCDYHSIk42eiDSIXH3FN&limit=1'
-    // https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&srsearch=Lebron%20James
-    // https://api.giphy.com/v1/gifs/search?q='+searchTerm+ '&api_key=HvaacROi9w5oQCDYHSIk42eiDSIXH3FNlimit=1
+    
     fetch(apiUrl)
       .then(function(response) {
           if(response.ok) {
               
               response.json().then(function(data) {
-                  console.log(data);
+                  //console.log(data);
+                   getGiphy(data);
                   
               })
           }
       })
 }
 
-getPlayerID();
-giphyApi();
+var getGiphy = function(gifInput) {
+    console.log(gifInput);
+}
 
+playerFormEl.addEventListener("submit", formSubmitHandler);
 
