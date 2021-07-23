@@ -1,21 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GroupProject1</title>
-
-    <link rel="stylesheet" href= "./assets/css/styles.css" >
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.min.css"
+        integrity="sha512-EZLkOqwILORob+p0BXZc+Vm3RgJBOe1Iq/0fiI7r/wJgzOFZMlsqTa29UEl6v6U6gsV4uIpsNZoV32YZqrCRCQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="./assets/css/styles.css">
 </head>
-<body>
-    <h1>GroupProject1</h1>
 
-    
-    
+<body>
+    <header class="container">
+        <h1>GroupProject1</h1>
+    </header>
+    <main class = "container">
+        <!-- search bar-->
+
+        <div>
+            <h3>NBA Average Stats for 2020</h3>
+            <form id="player-form">
+                <label id="player-name" for="playername"> Player Name</label>
+                <input name="playername" id="playername" type="text" placeholder="Lebron James" />
+                <button type="submit" class="btn">Search </button>
+            </form>
+            <span id="error-msg"></span>
+        </div>
+
+        <div class = "row">
+            <div class = "one-half column">
+                <!-- bio/gif-->
+                <div>
+                    <h3>Player Bio</h3>
+
+                    <div id="gif">
+                        <!--GIF-->
+                    </div>
+                    <ul>
+
+                        <li>Name: <span id="playerFullName"></span></li>
+                        <li>Team: <span id="playerTeam"></span></li>
+                        <li>Position: <span id="playerPosition"></span></li>
+                        <li>Height: <span id="playerHeight"></span></li>
+                    </ul>
+
+                </div>
+
+            </div>
+            <!-- stats-->
+            <div class = "one-half column">
+                <h3>Player Stats</h3>
+                <ul>
+                    <li>Points: <span id="playerPoints"></span></li>
+                    <li>Rebounds: <span id="playerRebounds"></span></li>
+                    <li>Assists: <span id="playerAssists"></span></li>
+                    <li>Steals: <span id="playerSteals"></span></li>
+                    <li>Blocks: <span id="playerBlocks"></span></li>
+                    <li>Turnovers: <span id="playerTO"></span></li>
+                    <li>FG%: <span id="playerFG"></span></li>
+                    <li>3PT%: <span id="player3PT"></span></li>
+                    <li>FT%: <span id="playerFT"></span></li>
+                </ul>
+
+            </div>
+        </div>
+
+
+    </main>
+
+
+
     <!-- scripts-->
     <div>
         <script src="./assets/js/scripts.js"></script>
     </div>
 </body>
+
 </html>
