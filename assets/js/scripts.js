@@ -26,6 +26,8 @@ var siteHeader = document.getElementById('siteHeader');
 var introContent = document.getElementById('introContent');
 var playerFavorites = document.getElementById('player-favorites');
 
+var localFavorites = [];
+
 
 
 
@@ -184,11 +186,12 @@ var cleartxt = function () {
 
 var saveFavorites = function (event) {
     event.preventDefault();
-    var playername = playerNameInputEl.value.trim();
+    var playername = playerFullName.textContent;
+    
 
     var favoriteBtn = document.getElementById('favoriteBtn');
 
-    var buttonCreate = document.createElement('div');
+    var buttonCreate = document.createElement('button');
 
     var buttonSpan = document.createElement('span');
 
@@ -196,23 +199,25 @@ var saveFavorites = function (event) {
     buttonSpan.id ="X"+playername;
     buttonSpan.style.color = "red";
 
-    
-    
-
     buttonCreate.innerHTML = playername;
     buttonCreate.id = "button" + playername;
-    buttonCreate.style.border = "1px solid black";
-    buttonCreate.style.width = "fit-content"
-    buttonCreate.style.padding = "3px";
-    buttonCreate.style.backgroundColor = "lightgray";
     buttonCreate.class = "buttonFav";
-    buttonCreate.style.cursor = "pointer";
+    
+    var favDataObj = {
+        favName: playerFullName.textContent,
+        id: "button" + playerFullName.textContent,
+        favClass: "buttonFav"
 
+    };
+    
+
+    localFavorites.push(favDataObj);
+    setFavorites(localFavorites);
+    //console.log(localFavorites);
+    //console.log(favDataObj);
     buttonCreate.appendChild(buttonSpan);
 
     favoriteBtn.appendChild(buttonCreate);
-
-    
 
     favoriteBtn.addEventListener('click', function (event) {
         if (event.target && event.target.id === 'button' + playername) {
@@ -227,10 +232,71 @@ var saveFavorites = function (event) {
         if (event.target && event.target.id === "X"+playername){
             
             buttonCreate.remove();
+            
         }
     })
 }
 
+var setFavorites = function (data) {
+    localStorage.setItem("favoritesObj", JSON.stringify(data));
+    
+    
+}
+
+var loadFavorites = function(data) {
+    console.log("loadFavorites is running");
+    var savedFavorites = localStorage.getItem("favoritesObj");
+    if (!savedFavorites) {
+        return false;
+      }
+      console.log("Saved favorites found!");
+      // else, load up saved tasks
+    
+      savedFavorites = JSON.parse(savedFavorites);
+      console.log(savedFavorites);
+
+      var favoriteBtn = document.getElementById('favoriteBtn');
+
+      var savedFavBtn = document.createElement('button');
+  
+      var savedFavBtnSpan = document.createElement('span');
+  
+      savedFavBtnSpan.innerHTML = "  X"
+      savedFavBtnSpan.id ="X"+savedFavorites[0].favName;
+      savedFavBtnSpan.style.color = "red";
+  
+      savedFavBtn.innerHTML = savedFavorites[0].favName;
+      savedFavBtn.id = "button" + savedFavorites[0].favName;
+      savedFavBtn.class = "buttonFav";
+
+      savedFavBtn.appendChild(savedFavBtnSpan);
+
+      favoriteBtn.appendChild(savedFavBtn);
+
+      favoriteBtn.addEventListener('click', function (event) {
+        if (event.target && event.target.id === 'button' + savedFavorites[0].favName) {
+            errormsg.textContent = "";
+            playerContent.style.display = "block";
+        siteHeader.style.display = "none";
+        introContent.style.display = "none";
+        playerFavorites.style.display = "block";
+            getPlayerID(savedFavorites[0].favName);
+            giphyApi(savedFavorites[0].favName);
+            cleartxt();
+            console.log(savedFavorites[0].favName);
+        }
+    })
+
+    savedFavBtnSpan.addEventListener('click', function(event){
+        if (event.target && event.target.id === "X"+savedFavorites[0].favName){
+            
+            savedFavBtn.remove();
+            
+        }
+    })
+
+}
 playerFormEl.addEventListener("submit", formSubmitHandler);
 playerFavorites.addEventListener("click", saveFavorites);
 
+loadFavorites();
