@@ -23,7 +23,8 @@ var errormsg = document.getElementById('error-msg');
 
 var playerContent = document.getElementById('playerContent');
 var siteHeader = document.getElementById('siteHeader');
-
+var introContent = document.getElementById('introContent');
+console.log(introContent);
 
 
 // on button click with valid NBA player run PlayerID and Giphy functions
@@ -38,8 +39,12 @@ var formSubmitHandler = function (event) {
         getPlayerID(playername);
         giphyApi(playername);
         cleartxt();
+        
         playerContent.style.display = "block";
         siteHeader.style.display = "none";
+        introContent.style.display = "none";
+        
+        
 
     } else {
         cleartxt();
