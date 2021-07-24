@@ -24,7 +24,9 @@ var errormsg = document.getElementById('error-msg');
 var playerContent = document.getElementById('playerContent');
 var siteHeader = document.getElementById('siteHeader');
 var introContent = document.getElementById('introContent');
-console.log(introContent);
+var playerFavorites = document.getElementById('player-favorites');
+
+
 
 
 // on button click with valid NBA player run PlayerID and Giphy functions
@@ -35,22 +37,25 @@ var formSubmitHandler = function (event) {
 
 
     if (playername) {
-        errormsg.textContent="";
+        errormsg.textContent = "";
         getPlayerID(playername);
         giphyApi(playername);
         cleartxt();
-        
+
         playerContent.style.display = "block";
         siteHeader.style.display = "none";
         introContent.style.display = "none";
-        
-        
+        playerFavorites.style.display = "block";
+
+
 
     } else {
         cleartxt();
         errormsg.textContent = "Please enter an active player during the 2020 Season, form submit";
     }
 }
+
+
 
 var getPlayerID = function (name) {
 
@@ -177,6 +182,55 @@ var cleartxt = function () {
     playerFT.textContent = '';
 }
 
+var saveFavorites = function (event) {
+    event.preventDefault();
+    var playername = playerNameInputEl.value.trim();
+
+    var favoriteBtn = document.getElementById('favoriteBtn');
+
+    var buttonCreate = document.createElement('div');
+
+    var buttonSpan = document.createElement('span');
+
+    buttonSpan.innerHTML = "  X"
+    buttonSpan.id ="X"+playername;
+    buttonSpan.style.color = "red";
+
+    
+    
+
+    buttonCreate.innerHTML = playername;
+    buttonCreate.id = "button" + playername;
+    buttonCreate.style.border = "1px solid black";
+    buttonCreate.style.width = "fit-content"
+    buttonCreate.style.padding = "3px";
+    buttonCreate.style.backgroundColor = "lightgray";
+    buttonCreate.class = "buttonFav";
+    buttonCreate.style.cursor = "pointer";
+
+    buttonCreate.appendChild(buttonSpan);
+
+    favoriteBtn.appendChild(buttonCreate);
+
+    
+
+    favoriteBtn.addEventListener('click', function (event) {
+        if (event.target && event.target.id === 'button' + playername) {
+            errormsg.textContent = "";
+            getPlayerID(playername);
+            giphyApi(playername);
+            cleartxt();
+        }
+    })
+
+    buttonSpan.addEventListener('click', function(event){
+        if (event.target && event.target.id === "X"+playername){
+            
+            buttonCreate.remove();
+        }
+    })
+}
 
 playerFormEl.addEventListener("submit", formSubmitHandler);
+playerFavorites.addEventListener("click", saveFavorites);
 
