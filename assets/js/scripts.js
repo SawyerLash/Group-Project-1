@@ -21,6 +21,9 @@ var playerGif = document.querySelector('#gif');
 
 var errormsg = document.getElementById('error-msg');
 
+var playerContent = document.getElementById('playerContent');
+var siteHeader = document.getElementById('siteHeader');
+
 
 
 // on button click with valid NBA player run PlayerID and Giphy functions
@@ -35,6 +38,9 @@ var formSubmitHandler = function (event) {
         getPlayerID(playername);
         giphyApi(playername);
         cleartxt();
+        playerContent.style.display = "block";
+        siteHeader.style.display = "none";
+
     } else {
         cleartxt();
         errormsg.textContent = "Please enter an active player during the 2020 Season, form submit";

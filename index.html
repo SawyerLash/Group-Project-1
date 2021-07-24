@@ -11,34 +11,26 @@
 </head>
 
 <body>
-    <header >
-        <h1>GroupProject1</h1>
+    <header id = "siteHeader">
+        <h1  >NBA Average Stats</h1>
     </header>
     <main >
-        <!-- search bar-->
 
-        <div>
-            <h3>NBA Average Stats for 2020</h3>
-            <form id="player-form">
-                <label id="player-name" for="playername"> Player Name</label>
-                <input name="playername" id="playername" type="text" placeholder="Lebron James" />
-                <button type="submit" class="btn">Search </button>
-            </form>
-            <span id="error-msg"></span>
-        </div>
 
-        <div >
+
+
+        <div id = "playerContent" style = "display:none" >
             <div >
+                <h2><span id="playerFullName"></span></h2>
                 <!-- bio/gif-->
                 <div>
-                    <h3>Player Bio</h3>
+                    
 
                     <div id="gif">
                         <!--GIF-->
                     </div>
+                    <h3>Player Bio</h3>
                     <ul>
-
-                        <li>Name: <span id="playerFullName"></span></li>
                         <li>Team: <span id="playerTeam"></span></li>
                         <li>Position: <span id="playerPosition"></span></li>
                         <li>Height: <span id="playerHeight"></span></li>
@@ -64,8 +56,17 @@
 
             </div>
         </div>
+        <!-- search bar-->
 
-
+        <div>
+            
+            <form id="player-form">
+                <label id="player-name" for="playername"> Player Name</label>
+                <input name="playername" id="playername" type="text" placeholder="Lebron James" />
+                <button type="submit" class="btn">Search </button>
+            </form>
+            <span id="error-msg"></span>
+        </div>
     </main>
 
 
