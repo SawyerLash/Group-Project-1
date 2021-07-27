@@ -1,5 +1,10 @@
 
 
-.buttonFav{
-    cursor: pointer;
+.max-height {
+    height: 900px;
+}
+
+.margin-left-140 {
+    margin-left: 140px;
+    border-radius:50%;
 }

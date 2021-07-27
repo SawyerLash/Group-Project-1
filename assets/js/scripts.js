@@ -48,11 +48,13 @@ var formSubmitHandler = function (event) {
         siteHeader.style.display = "none";
         introContent.style.display = "none";
         playerFavorites.style.display = "block";
+        errormsg.style.display = "none";
 
 
 
     } else {
         cleartxt();
+        errormsg.style.display = "block";
         errormsg.textContent = "Please enter an active player during the 2020 Season, form submit";
     }
 }
@@ -72,6 +74,7 @@ var getPlayerID = function (name) {
                     if (data.data[0] === undefined) {
                         console.log("basketball player not found");
                         errormsg.textContent = "Please enter an active player during the 2020 Season, get player ID";
+                        errormsg.style.display = "block";
                         cleartxt();
                     } else {
                         console.log(data.data[0].id);
@@ -100,6 +103,7 @@ var playerBio = function (playerID) {
                     console.log(data);
                     if (data.first_name === undefined) {
                         errormsg.textContent = "Please enter an active player during the 2020 Season. playerBio";
+                        errormsg.style.display = "block";
                         cleartxt();
                     } else {
 
@@ -126,6 +130,7 @@ var averageStats = function (playerID) {
                     if (data.data[0] === undefined) {
 
                         errormsg.textContent = "Please enter an active player during the 2020 Season. AverageStats";
+                        errormsg.style.display = "block";
                         cleartxt();
                     } else {
 
@@ -187,7 +192,7 @@ var cleartxt = function () {
 var saveFavorites = function (event) {
     event.preventDefault();
     var playername = playerFullName.textContent;
-    
+
 
     var favoriteBtn = document.getElementById('favoriteBtn');
 
@@ -196,20 +201,20 @@ var saveFavorites = function (event) {
     var buttonSpan = document.createElement('span');
 
     buttonSpan.innerHTML = "  X"
-    buttonSpan.id ="X"+playername;
+    buttonSpan.id = "X" + playername;
     buttonSpan.style.color = "red";
 
     buttonCreate.innerHTML = playername;
     buttonCreate.id = "button" + playername;
-    buttonCreate.class = "buttonFav";
-    
+    buttonCreate.className = "buttonFav bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ";
+
     var favDataObj = {
         favName: playerFullName.textContent,
         id: "button" + playerFullName.textContent,
         favClass: "buttonFav"
 
     };
-    
+
 
     localFavorites.push(favDataObj);
     setFavorites(localFavorites);
@@ -222,64 +227,68 @@ var saveFavorites = function (event) {
     favoriteBtn.addEventListener('click', function (event) {
         if (event.target && event.target.id === 'button' + playername) {
             errormsg.textContent = "";
+            errormsg.style.display = "none";
             getPlayerID(playername);
             giphyApi(playername);
             cleartxt();
         }
     })
 
-    buttonSpan.addEventListener('click', function(event){
-        if (event.target && event.target.id === "X"+playername){
-            
+    buttonSpan.addEventListener('click', function (event) {
+        if (event.target && event.target.id === "X" + playername) {
+
             buttonCreate.remove();
-            
+
         }
     })
 }
 
 var setFavorites = function (data) {
     localStorage.setItem("favoritesObj", JSON.stringify(data));
-    
-    
+    console.log(data);
+    console.log(JSON.stringify(data));
+
+
 }
 
-var loadFavorites = function(data) {
+var loadFavorites = function (data) {
     console.log("loadFavorites is running");
     var savedFavorites = localStorage.getItem("favoritesObj");
     if (!savedFavorites) {
         return false;
-      }
-      console.log("Saved favorites found!");
-      // else, load up saved tasks
-    
-      savedFavorites = JSON.parse(savedFavorites);
-      console.log(savedFavorites);
+    }
+    console.log("Saved favorites found!");
+    // else, load up saved tasks
 
-      var favoriteBtn = document.getElementById('favoriteBtn');
+    savedFavorites = JSON.parse(savedFavorites);
+    console.log(savedFavorites);
 
-      var savedFavBtn = document.createElement('button');
-  
-      var savedFavBtnSpan = document.createElement('span');
-  
-      savedFavBtnSpan.innerHTML = "  X"
-      savedFavBtnSpan.id ="X"+savedFavorites[0].favName;
-      savedFavBtnSpan.style.color = "red";
-  
-      savedFavBtn.innerHTML = savedFavorites[0].favName;
-      savedFavBtn.id = "button" + savedFavorites[0].favName;
-      savedFavBtn.class = "buttonFav";
+    var favoriteBtn = document.getElementById('favoriteBtn');
 
-      savedFavBtn.appendChild(savedFavBtnSpan);
+    var savedFavBtn = document.createElement('button');
 
-      favoriteBtn.appendChild(savedFavBtn);
+    var savedFavBtnSpan = document.createElement('span');
 
-      favoriteBtn.addEventListener('click', function (event) {
+    savedFavBtnSpan.innerHTML = "  X"
+    savedFavBtnSpan.id = "X" + savedFavorites[0].favName;
+    savedFavBtnSpan.style.color = "red";
+
+    savedFavBtn.innerHTML = savedFavorites[0].favName;
+    savedFavBtn.id = "button" + savedFavorites[0].favName;
+    savedFavBtn.className = "buttonFav bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ";
+
+    savedFavBtn.appendChild(savedFavBtnSpan);
+
+    favoriteBtn.appendChild(savedFavBtn);
+
+    favoriteBtn.addEventListener('click', function (event) {
         if (event.target && event.target.id === 'button' + savedFavorites[0].favName) {
             errormsg.textContent = "";
+            errormsg.style.display = "none";
             playerContent.style.display = "block";
-        siteHeader.style.display = "none";
-        introContent.style.display = "none";
-        playerFavorites.style.display = "block";
+            siteHeader.style.display = "none";
+            introContent.style.display = "none";
+            playerFavorites.style.display = "block";
             getPlayerID(savedFavorites[0].favName);
             giphyApi(savedFavorites[0].favName);
             cleartxt();
@@ -287,11 +296,11 @@ var loadFavorites = function(data) {
         }
     })
 
-    savedFavBtnSpan.addEventListener('click', function(event){
-        if (event.target && event.target.id === "X"+savedFavorites[0].favName){
-            
+    savedFavBtnSpan.addEventListener('click', function (event) {
+        if (event.target && event.target.id === "X" + savedFavorites[0].favName) {
+
             savedFavBtn.remove();
-            
+
         }
     })
 
