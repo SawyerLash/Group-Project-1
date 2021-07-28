@@ -6,5 +6,23 @@
 
 .margin-left-140 {
     margin-left: 140px;
-    border-radius:50%;
+    
+}
+
+@media  screen and (max-width: 780px)  {
+    .margin-left-140 {
+        margin-right: 10px;
+
+        margin-left: auto;
+
+    
+    }
+
+    .main {
+        height: 1100px;
+    }
+
+    .search-bar {
+        margin:0 10px;
+    }
 }

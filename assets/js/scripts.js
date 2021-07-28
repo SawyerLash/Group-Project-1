@@ -37,7 +37,7 @@ var formSubmitHandler = function (event) {
 
     var playername = playerNameInputEl.value.trim();
 
-
+    // if player name isn't blank, clear error messages and display/hide content
     if (playername) {
         errormsg.textContent = "";
         getPlayerID(playername);
@@ -53,9 +53,10 @@ var formSubmitHandler = function (event) {
 
 
     } else {
+        //if search is blank. Clear all gifs/text and display error message
         cleartxt();
         errormsg.style.display = "block";
-        errormsg.textContent = "Please enter an active player during the 2020 Season, form submit";
+        errormsg.textContent = "Please enter an active player during the 2020 Season.";
     }
 }
 
@@ -64,7 +65,7 @@ var formSubmitHandler = function (event) {
 var getPlayerID = function (name) {
 
     var apiUrl = "https://www.balldontlie.io/api/v1/players?search=" + name
-
+    //gets the player info based off of user input
     fetch(apiUrl)
         .then(function (response) {
             if (response.ok) {
@@ -72,11 +73,13 @@ var getPlayerID = function (name) {
                 response.json().then(function (data) {
                     //console.log(data);
                     if (data.data[0] === undefined) {
+                        //if the player does not exist or did not play in the 2020 season return error message and clear text
                         console.log("basketball player not found");
-                        errormsg.textContent = "Please enter an active player during the 2020 Season, get player ID";
+                        errormsg.textContent = "Please enter an active player during the 2020 Season.";
                         errormsg.style.display = "block";
                         cleartxt();
                     } else {
+                        //if entry is good, get the player ID and run player Bio and average Stats
                         console.log(data.data[0].id);
                         playerID = data.data[0].id;
                         playerBio(playerID);
@@ -92,7 +95,7 @@ var getPlayerID = function (name) {
 }
 
 
-
+// gets player Bio data
 var playerBio = function (playerID) {
     var apiUrl = "https://www.balldontlie.io/api/v1/players/" + playerID;
     fetch(apiUrl)
@@ -102,7 +105,7 @@ var playerBio = function (playerID) {
                 response.json().then(function (data) {
                     console.log(data);
                     if (data.first_name === undefined) {
-                        errormsg.textContent = "Please enter an active player during the 2020 Season. playerBio";
+                        errormsg.textContent = "Please enter an active player during the 2020 Season.";
                         errormsg.style.display = "block";
                         cleartxt();
                     } else {
@@ -117,7 +120,7 @@ var playerBio = function (playerID) {
         })
 
 }
-
+// gets average stats 
 var averageStats = function (playerID) {
 
     var apiUrl = "https://www.balldontlie.io/api/v1/season_averages?season=2020&player_ids[]=" + playerID;
@@ -129,7 +132,7 @@ var averageStats = function (playerID) {
                 response.json().then(function (data) {
                     if (data.data[0] === undefined) {
 
-                        errormsg.textContent = "Please enter an active player during the 2020 Season. AverageStats";
+                        errormsg.textContent = "Please enter an active player during the 2020 Season.";
                         errormsg.style.display = "block";
                         cleartxt();
                     } else {
@@ -151,7 +154,7 @@ var averageStats = function (playerID) {
             }
         })
 }
-
+// gets a giph that matches the search input and displays it in the player Bio. 
 var giphyApi = function (name) {
 
     var apiUrl = 'https://api.giphy.com/v1/gifs/search?q=' + name + '&api_key=HvaacROi9w5oQCDYHSIk42eiDSIXH3FN&limit=1'
@@ -164,13 +167,13 @@ var giphyApi = function (name) {
                     console.log(data);
 
                     playerGif.innerHTML = '<iframe src="' + `${data.data[0].embed_url}` + '" width="480" height="240" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>';
-
+                    
 
                 })
             }
         })
 }
-
+// clears all text input and giphs
 var cleartxt = function () {
     var gifImg = document.getElementById('gif');
     gifImg.innerHTML = '';
@@ -188,7 +191,7 @@ var cleartxt = function () {
     player3PT.textContent = '';
     playerFT.textContent = '';
 }
-
+// create favorites button
 var saveFavorites = function (event) {
     event.preventDefault();
     var playername = playerFullName.textContent;
@@ -208,6 +211,7 @@ var saveFavorites = function (event) {
     buttonCreate.id = "button" + playername;
     buttonCreate.className = "buttonFav bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ";
 
+    // creates array for local storage
     var favDataObj = {
         favName: playerFullName.textContent,
         id: "button" + playerFullName.textContent,
@@ -223,7 +227,7 @@ var saveFavorites = function (event) {
     buttonCreate.appendChild(buttonSpan);
 
     favoriteBtn.appendChild(buttonCreate);
-
+    //adds click element to the favorites to run code
     favoriteBtn.addEventListener('click', function (event) {
         if (event.target && event.target.id === 'button' + playername) {
             errormsg.textContent = "";
@@ -233,7 +237,7 @@ var saveFavorites = function (event) {
             cleartxt();
         }
     })
-
+    // deletes buttons if pressing the X
     buttonSpan.addEventListener('click', function (event) {
         if (event.target && event.target.id === "X" + playername) {
 
@@ -242,7 +246,7 @@ var saveFavorites = function (event) {
         }
     })
 }
-
+// takes data from array and sets it in local storage
 var setFavorites = function (data) {
     localStorage.setItem("favoritesObj", JSON.stringify(data));
     console.log(data);
@@ -250,7 +254,7 @@ var setFavorites = function (data) {
 
 
 }
-
+// loads local storage buttons for favorite player
 var loadFavorites = function (data) {
     console.log("loadFavorites is running");
     var savedFavorites = localStorage.getItem("favoritesObj");
