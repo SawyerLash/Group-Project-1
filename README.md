@@ -4,9 +4,10 @@
 *HTML
 *CSS
 *Tailwind
+*JavaScript
 
 ## Image
-![group-project-1](./assets/images/appimg.PNG?raw=true "Image of NBA Stats app")
+![](./assets/images/NBA.img.png)
 
 ## About
 NBA Average STATS is a website created to give users statistics on NBA players.
