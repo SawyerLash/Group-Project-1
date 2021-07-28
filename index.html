@@ -7,33 +7,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GroupProject1</title>
     
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="./assets/css/styles.css">
 </head>
 
-<body>
-    <header id = "siteHeader">
-        <h1  >NBA Average Stats</h1>
-    </header>
-    <main >
+<body class = " bg-black mt-12 text-center  text-gray-300" >
+  
+    <main class = "max-w-screen-md max-height border-4 bg-cover  bg-gradient-to-r from-gray-800 to-blue-900 mx-auto main" >
+        <header id = "siteHeader" class = "object-top">
+            <h1  class ="text-5xl mb-4 font-bold underline">NBA Average Stats</h1>
+        </header>
 
 
 
 
         <div id = "playerContent" style = "display:none" >
             <div >
-                <h2><span id="playerFullName"></span></h2>
+                <h2 class ="text-5xl my-3 font-bold underline"><span class = "text-white" id="playerFullName"></span></h2>
                 <!-- bio/gif-->
                 <div>
                     
 
-                    <div id="gif">
+                    <div class = "margin-left-140" id="gif">
                         <!--GIF-->
                     </div>
-                    <h3>Player Bio</h3>
+                    <h3 class = "text-2xl font-bold underline">Player Bio</h3>
                     <ul>
-                        <li>Team: <span id="playerTeam"></span></li>
-                        <li>Position: <span id="playerPosition"></span></li>
-                        <li>Height: <span id="playerHeight"></span></li>
+                        <li>Team: <span class = "text-white" id="playerTeam"></span></li>
+                        <li>Position: <span class = "text-white" id="playerPosition"></span></li>
+                        <li>Height: <span class = "text-white" id="playerHeight"></span></li>
                     </ul>
 
                 </div>
@@ -41,36 +43,48 @@
             </div>
             <!-- stats-->
             <div >
-                <h3>Player Stats</h3>
-                <ul>
-                    <li>Points: <span id="playerPoints"></span></li>
-                    <li>Rebounds: <span id="playerRebounds"></span></li>
-                    <li>Assists: <span id="playerAssists"></span></li>
-                    <li>Steals: <span id="playerSteals"></span></li>
-                    <li>Blocks: <span id="playerBlocks"></span></li>
-                    <li>Turnovers: <span id="playerTO"></span></li>
-                    <li>FG%: <span id="playerFG"></span></li>
-                    <li>3PT%: <span id="player3PT"></span></li>
-                    <li>FT%: <span id="playerFT"></span></li>
+                <h3 class = "text-2xl font-bold underline">Player Stats</h3>
+                <ul class = "mb-2">
+                    <li>Points: <span class = "text-white" id="playerPoints"></span></li>
+                    <li>Rebounds: <span class = "text-white"  id="playerRebounds"></span></li>
+                    <li>Assists: <span class = "text-white" id="playerAssists"></span></li>
+                    <li>Steals: <span class = "text-white" id="playerSteals"></span></li>
+                    <li>Blocks: <span class = "text-white" id="playerBlocks"></span></li>
+                    <li>Turnovers: <span class = "text-white" id="playerTO"></span></li>
+                    <li>FG%: <span class = "text-white" id="playerFG"></span></li>
+                    <li>3PT%: <span class = "text-white" id="player3PT"></span></li>
+                    <li>FT%: <span class = "text-white" id="playerFT"></span></li>
                 </ul>
 
             </div>
         </div>
         <!-- search bar-->
 
-        <div>
+        <div class = "mx-40 py-4 border-4 search-bar">
             
-            <form id="player-form">
-                <label id="player-name" for="playername"> Player Name</label>
-                <input name="playername" id="playername" type="text" placeholder="Lebron James" />
-                <button type="submit" class="btn">Search </button>
+            <form id="player-form" class = "p-2">
+                <label class = "mr-2" id="player-name" for="playername"> Search Players: </label>
+                <input class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="playername" id="playername" type="text" placeholder="Lebron James" />
+                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Search </button>
+                
             </form>
-            <span id="error-msg"></span>
+            <form class = "mt-2" id="player-favorites" style = "display:none">
+                
+                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add to Favorites </button>
+                
+            </form>
+
+            <span id="error-msg" class = "mx-auto w-3/4 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded my-5 " style = "display:none" role = "alert"></span>
+
+            <div class = "mt-2 mr-2" id = "favoriteBtn" >Favorite Player: </div>
+
+
+            
         </div>
 
-        <div id = "introContent">
+        <div id = "introContent" class = "ml-12 mr-12 mt-8">
             <h3>Introduction/instructions</h3>
-            <a>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Placeat consectetur distinctio autem, omnis culpa praesentium soluta corporis inventore aperiam itaque?</a>
+            <a class = "">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Placeat consectetur distinctio autem, omnis culpa praesentium soluta corporis inventore aperiam itaque?</a>
         </div> 
     </main>
 
