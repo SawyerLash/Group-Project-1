@@ -7,7 +7,7 @@
 *JavaScript
 
 ## Image
-![](./assets/images/NBA.img.PNG?raw=true "Image of NBA Stats App")
+![](./assets/images/NBAimg.PNG?raw=true "Image of NBA Stats App")
 
 ## About
 NBA Average STATS is a website created to give users statistics on NBA players.
