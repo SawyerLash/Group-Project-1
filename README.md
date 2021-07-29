@@ -17,7 +17,7 @@ NBA Average STATS is a website created to give users statistics on NBA players.
 git clone git@github.com:SawyerLash/Group-Project-1.git
 
 ## Website
-
+https://sawyerlash.github.io/Group-Project-1/ 
 
 ## API
 *balldontlie
