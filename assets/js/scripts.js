@@ -26,7 +26,9 @@ var siteHeader = document.getElementById('siteHeader');
 var introContent = document.getElementById('introContent');
 var playerFavorites = document.getElementById('player-favorites');
 
-var localFavorites = [];
+var favoriteBtn = document.getElementById('favoriteBtn');
+
+
 
 
 
@@ -192,60 +194,35 @@ var cleartxt = function () {
     playerFT.textContent = '';
 }
 // create favorites button
-var saveFavorites = function (event) {
+
+
+var saveFavorites = function(event) {
     event.preventDefault();
-    var playername = playerFullName.textContent;
-
-
-    var favoriteBtn = document.getElementById('favoriteBtn');
-
-    var buttonCreate = document.createElement('button');
-
-    var buttonSpan = document.createElement('span');
-
-    buttonSpan.innerHTML = "  X"
-    buttonSpan.id = "X" + playername;
-    buttonSpan.style.color = "red";
-
-    buttonCreate.innerHTML = playername;
-    buttonCreate.id = "button" + playername;
-    buttonCreate.className = "buttonFav bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ";
-
-    // creates array for local storage
+    
+    localStorage.clear();
+    localFavorites = [];
+    
+    favoriteBtn.style.display = "block";
+    
     var favDataObj = {
         favName: playerFullName.textContent,
-        id: "button" + playerFullName.textContent,
-        favClass: "buttonFav"
 
     };
 
-
+    
     localFavorites.push(favDataObj);
+
+    if (localFavorites[1]) {
+        errormsg.textContent = "Please remove current favorite player before adding a new one";
+        errormsg.style.display = "block";
+    }else{
+
+        
     setFavorites(localFavorites);
-    //console.log(localFavorites);
-    //console.log(favDataObj);
-    buttonCreate.appendChild(buttonSpan);
+    loadFavorites2();
+}}
 
-    favoriteBtn.appendChild(buttonCreate);
-    //adds click element to the favorites to run code
-    favoriteBtn.addEventListener('click', function (event) {
-        if (event.target && event.target.id === 'button' + playername) {
-            errormsg.textContent = "";
-            errormsg.style.display = "none";
-            getPlayerID(playername);
-            giphyApi(playername);
-            cleartxt();
-        }
-    })
-    // deletes buttons if pressing the X
-    buttonSpan.addEventListener('click', function (event) {
-        if (event.target && event.target.id === "X" + playername) {
 
-            buttonCreate.remove();
-
-        }
-    })
-}
 // takes data from array and sets it in local storage
 var setFavorites = function (data) {
     localStorage.setItem("favoritesObj", JSON.stringify(data));
@@ -255,36 +232,36 @@ var setFavorites = function (data) {
 
 }
 // loads local storage buttons for favorite player
-var loadFavorites = function (data) {
-    console.log("loadFavorites is running");
+var loadFavorites2 = function(data) {
+    
     var savedFavorites = localStorage.getItem("favoritesObj");
+    // if there is nothing in local storage set the button to not display and return out of the function
     if (!savedFavorites) {
+        favoriteBtn.style.display = "none";
         return false;
     }
-    console.log("Saved favorites found!");
-    // else, load up saved tasks
+    // If local storage is present. load a button on the home screan for favorite player
 
     savedFavorites = JSON.parse(savedFavorites);
     console.log(savedFavorites);
 
-    var favoriteBtn = document.getElementById('favoriteBtn');
 
-    var savedFavBtn = document.createElement('button');
+    
 
-    var savedFavBtnSpan = document.createElement('span');
+    var favoriteBtnSpan = document.createElement('span');
 
-    savedFavBtnSpan.innerHTML = "  X"
-    savedFavBtnSpan.id = "X" + savedFavorites[0].favName;
-    savedFavBtnSpan.style.color = "red";
+    favoriteBtnSpan.innerHTML = "  X"
+    favoriteBtnSpan.id = "X" + savedFavorites[0].favName;
+    favoriteBtnSpan.style.color = "red";
 
-    savedFavBtn.innerHTML = savedFavorites[0].favName;
-    savedFavBtn.id = "button" + savedFavorites[0].favName;
-    savedFavBtn.className = "buttonFav bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ";
+    favoriteBtn.innerHTML = savedFavorites[0].favName;
+    favoriteBtn.id = "button" + savedFavorites[0].favName;
+    
+    favoriteBtn.appendChild(favoriteBtnSpan);
 
-    savedFavBtn.appendChild(savedFavBtnSpan);
-
-    favoriteBtn.appendChild(savedFavBtn);
-
+    
+   
+    // allows you to search your favorite player by clicking button 
     favoriteBtn.addEventListener('click', function (event) {
         if (event.target && event.target.id === 'button' + savedFavorites[0].favName) {
             errormsg.textContent = "";
@@ -299,17 +276,21 @@ var loadFavorites = function (data) {
             console.log(savedFavorites[0].favName);
         }
     })
-
-    savedFavBtnSpan.addEventListener('click', function (event) {
+    // Sets display of button to none and clears local storage
+    favoriteBtnSpan.addEventListener('click', function (event) {
         if (event.target && event.target.id === "X" + savedFavorites[0].favName) {
 
-            savedFavBtn.remove();
+            favoriteBtn.style.display = "none";
+            localStorage.clear();
 
         }
     })
 
 }
-playerFormEl.addEventListener("submit", formSubmitHandler);
-playerFavorites.addEventListener("click", saveFavorites);
 
-loadFavorites();
+
+playerFormEl.addEventListener("submit", formSubmitHandler);
+playerFavorites.addEventListener("click", saveFavorites); //used to be saveFavorites
+
+loadFavorites2();
+
